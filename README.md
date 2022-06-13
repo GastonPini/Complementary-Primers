@@ -1,6 +1,6 @@
-# Primers
+# Complementary Primers
 
-# This script allows allows designing primers.
+## This script allows allows designing primers.
     
 A primer is a synthetic oligonucleotide which is mainly used in PCR (Polymerase Chain Reaction), for the amplification of a DNA fragment. The primers must have a sequence which must be reverse complementary to a region of the target or template DNA, so that the annealing can be carried out.
 
