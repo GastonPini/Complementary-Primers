@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-print "Ingresar el archivo de texto con la secuencia completa que contiene el target de inters solamente con los nucleótidos: ";
+print "Ingresar el archivo de texto que contiene la secuencia completa de target de interés, solamente con los nucleótidos: ";
 my $archivo = <STDIN>;	chomp $archivo;
 unless (open (FILEIN, $archivo) ) {
 	print "No se puede abrir el archivo $archivo\n\n";
@@ -21,7 +21,7 @@ $pero = 0;
 $aviso = 0;
 $d = 0;
 $c = 0;
-print "Ingrese el rango de la temperatura de melting, [0,0] por default:\n";
+print "Ingrese el rango de la temperatura de melting (recomendado: [55, 80], [50, 60] por default):\n";
 $T_min = <STDIN>;
 $T_max = <STDIN>;
 if($T_min == 0){
@@ -30,7 +30,7 @@ if($T_min == 0){
 		$T_max = 60;
 	}
 }
-print "Ingresar la posiciones de inicio y final de la secuencia de inters: \n";
+print "Ingresar la posiciones de inicio y final de la secuencia de interés: \n";
 $inicio = <STDIN>;
 $fin = <STDIN>;
 
@@ -38,7 +38,7 @@ while($bul == 0 & length($adn) > 200){
 	$af = 0; $cf = 0; $gf = 0; $tf = 0;
 	$ar = 0; $cr = 0; $gr = 0; $tr = 0;
 	
-	while($pero == 0){
+	#while($pero == 0){
 		
 		if ($d == 10){
 			$inicio--;
@@ -71,19 +71,19 @@ while($bul == 0 & length($adn) > 200){
 				$d++;
 			}
 		}
-		else{
-			if ($inicio >= 0){
-				print"No se encuentra un reverse. Ingrese otra posición, o 0 para salir: ";
-				$inicio = <STDIN>;
-				$d = 0;
-				if($inicio == 0){
-					exit;
-				}
-			}
-		}
+		#else{
+		#	if ($inicio >= 0){
+		#		print"No se encuentra un reverse. Ingrese otra posición de inicio, o 0 para salir: ";
+		#		$inicio = <STDIN>;
+		#		$d = 0;
+		#		if($inicio == 0){
+		#			exit;
+		#		}
+		#	}
+		#}
 		$af = 0; $cf = 0; $gf = 0; $tf = 0; 
-	}
-	print "La posición de inicio del forward es $inicio.\n\n\n";
+	#}
+	
 	
 
 	while($aviso == 0){
@@ -127,7 +127,7 @@ while($bul == 0 & length($adn) > 200){
 		}
 		$ar = 0; $cr = 0; $gr = 0; $tr = 0; 
 	}
-	print "La posición de inicio del reverse es $fin.\n\n\n";
+	
 	
 	if(($T_f - $T_r) <= 5 & ($T_f - $T_r) >= -5){
 		$bul = 1;
@@ -152,11 +152,16 @@ while($bul == 0 & length($adn) > 200){
 				}
 			}
 		}
-	}
-}
 
-$secuencia = substr($adn, $inicio, $fin - $inicio);
-print"Secuencia de inters:\n$secuencia";
+	}
+	$bul = 1;
+
+}
+print "La posición de inicio del forward es $inicio.\n\n\n";
+print "La posición de inicio del reverse es $fin.\n\n\n";
+
+$secuencia = substr($adn, $fin - $inicio, $inicio);
+print"Secuencia de interés:\n$secuencia \n\n";
 
 print "Longitud del primer forward: $tam_primer_f. \n\n";
 print "Longitud del primer reverse: $tam_primer_r. \n\n";
@@ -170,6 +175,6 @@ print "Porcentaje GC en reverse: $por_gc_r. \n\n";
 print "Temperatura de melting de forward: $T_f. \n\n";
 print "Temperatura de melting de reverse: $T_r. \n\n";
 
-$dif = $T_f - $T_r;
+$dif = abs($T_f - $T_r);
 
 print "Diferencia entre temperaturas de melting: $dif.";
